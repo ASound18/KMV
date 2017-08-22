@@ -84,7 +84,10 @@ shinyServer(function(input, output) {
       paste(input$company, "OHLC_PriceData.csv", sep= "_")
     },
     content = function(file) {
-      write.csv(priceData(), file)
+      data <- as.matrix(priceData())
+      df <- as.data.frame(cbind(rownames(data), data))
+      colnames(df)[1] <- "Date"
+      write.csv(df, file)
     }
   )
   
@@ -101,8 +104,9 @@ shinyServer(function(input, output) {
   output$table_OHLC <- renderGvis({
     if(input$radioButtons_OHLC == "Data"){
       withProgress(message = 'Rendering Data...', value = 0.8, {
-        data <- priceData()
-        df <- as.data.frame(data)
+        data <- as.matrix(priceData())
+        df <- as.data.frame(cbind(rownames(data), data))
+        colnames(df)[1] <- "Date"
         table <- gvisTable(df, options=list(page='enable', pageSize = 30))
       })
     }
