@@ -79,6 +79,15 @@ shinyServer(function(input, output) {
     radioButtons("radioButtons_OHLC", "View Chart or Data?", choices = c("Chart", "Data"), inline = FALSE)
   })
   
+  output$downloadData_OHLC <- downloadHandler(
+    filename = function() {
+      paste(input$company, "OHLC_PriceData.csv", sep= "_")
+    },
+    content = function(file) {
+      write.csv(priceData(), file)
+    }
+  )
+  
   output$chart_OHLC <- renderPlot({
     if(input$radioButtons_OHLC == "Chart"){
       withProgress(message = 'Rendering Chart...', value = 0.8, {
@@ -94,7 +103,7 @@ shinyServer(function(input, output) {
       withProgress(message = 'Rendering Data...', value = 0.8, {
         data <- priceData()
         df <- as.data.frame(data)
-        table <- gvisTable(df)
+        table <- gvisTable(df, options=list(page='enable', pageSize = 30))
       })
     }
   })
@@ -105,6 +114,20 @@ shinyServer(function(input, output) {
   output$radioButtons_IS <- renderUI({
     radioButtons("radioButtons_IS", "Quarter or Annual?", choices = c("Quarter" = "Q", "Annual" =  "A"), inline = FALSE)
   })
+  
+  output$downloadData_IS <- downloadHandler(
+    filename = function() {
+      paste(input$company, "IncomeStatement.csv", sep= "_")
+    },
+    content = function(file) {
+      if (input$radioButtons_IS == "Q") {
+        data <- financialData()$IS$Q
+      } else {
+        data <- financialData()$IS$A
+      }
+      write.csv(data, file)
+    }
+  )
   
   output$table_IS <- renderGvis({
     validate(need(length(input$radioButtons_IS) != 0, "Loading..."))
@@ -123,6 +146,20 @@ shinyServer(function(input, output) {
     radioButtons("radioButtons_BS", "Quarter or Annual?", choices = c("Quarter" = "Q", "Annual" =  "A"), inline = FALSE)
   })
   
+  output$downloadData_BS <- downloadHandler(
+    filename = function() {
+      paste(input$company, "BalanceSheet.csv", sep= "_")
+    },
+    content = function(file) {
+      if (input$radioButtons_BS == "Q") {
+        data <- financialData()$BS$Q
+      } else {
+        data <- financialData()$BS$A
+      }
+      write.csv(data, file)
+    }
+  )
+  
   output$table_BS <- renderGvis({
     validate(need(length(input$radioButtons_BS) != 0, "Loading..."))
     if (input$radioButtons_BS == "Q") {
@@ -139,6 +176,20 @@ shinyServer(function(input, output) {
   output$radioButtons_CF <- renderUI({
     radioButtons("radioButtons_CF", "Quarter or Annual?", choices = c("Quarter" = "Q", "Annual" =  "A"), inline = FALSE)
   })
+  
+  output$downloadData_CF <- downloadHandler(
+    filename = function() {
+      paste(input$company, "CashFlowStatement.csv", sep= "_")
+    },
+    content = function(file) {
+      if (input$radioButtons_CF == "Q") {
+        data <- financialData()$CF$Q
+      } else {
+        data <- financialData()$CF$A
+      }
+      write.csv(data, file)
+    }
+  )
   
   output$table_CF <- renderGvis({
     validate(need(length(input$radioButtons_CF) != 0, "Loading..."))
