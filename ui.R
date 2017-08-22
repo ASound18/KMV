@@ -33,7 +33,7 @@ shinyUI(navbarPage(
   
   navbarMenu("Financial Data",
              tabPanel("OHLC Price Data",
-                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("OHLC Price Data")), uiOutput("radioButtons_OHLC"))),
+                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("OHLC Price Data")), uiOutput("radioButtons_OHLC"), downloadButton('downloadData_OHLC', 'Download'))),
                                column(width = 9, 
                                       conditionalPanel(condition = "input.radioButtons_OHLC == 'Chart'", plotOutput("chart_OHLC")), 
                                       conditionalPanel(condition = "input.radioButtons_OHLC == 'Data'", htmlOutput("table_OHLC"))
@@ -43,17 +43,17 @@ shinyUI(navbarPage(
              "----",
              # "IS/BS/CF by Q/A",
              tabPanel("Income Statement", 
-                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Income Statement")), uiOutput("radioButtons_IS"))),
+                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Income Statement")), uiOutput("radioButtons_IS"), downloadButton('downloadData_IS', 'Download'))),
                                column(width = 9, (htmlOutput("table_IS")))
                                )
                       ),
              tabPanel("Balance Sheet",
-                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Balance Sheet")), uiOutput("radioButtons_BS"))),
+                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Balance Sheet")), uiOutput("radioButtons_BS"), downloadButton('downloadData_BS', 'Download'))),
                                column(width = 9, (htmlOutput("table_BS")))
                                )
                       ),
              tabPanel("Cash Flow Statement",
-                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Cash Flow Statement")), uiOutput("radioButtons_CF"))),
+                      fluidRow(column(width = 3, offset = 0, wellPanel(strong(h2("Cash Flow Statement")), uiOutput("radioButtons_CF"), downloadButton('downloadData_CF', 'Download'))),
                                column(width = 9, (htmlOutput("table_CF")))
                                )
                       )
