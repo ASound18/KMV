@@ -93,7 +93,7 @@ shinyUI(navbarPage(
                       fluidRow(column(12, uiOutput("rf"))),
                       fluidRow(column(12, plotOutput("equity_vs_asset_plot"))),
                       fluidRow(column(12, h5(htmlOutput("asset_volatility")))),
-                      fluidRow(column(12, helpText("Note: Default Point (replaced by 0 when missing) is calculated using Total Current Liabilities + 0.5 * Total Long Term Debt, which is assumed to mature in 1 year.")))
+                      fluidRow(column(12, helpText("Note: Default Point (replaced by 0 when missing) is calculated using Total Current Liabilities + 0.5 * Total Long Term LIabilities, which is assumed to mature in 1 year.")))
                       ),
              tabPanel(strong("Step2"),
                       wellPanel(fluidRow(column(12, h3(strong("Calculation of the Distance to Default (DD)."))))),
