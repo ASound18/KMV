@@ -257,7 +257,7 @@ shinyServer(function(input, output) {
   default_point <- reactive({
     data <- financialData()$BS$Q
     df <- as.data.frame(cbind(rownames(data), data))
-    out <- data[df[,1] == "Total Current Liabilities",1] +  data[df[,1] == "Total Long Term Debt",1]/2
+    out <- data[df[,1] == "Total Current Liabilities",1] +  (data[df[,1] == "Total Liabilities",1] - data[df[,1] == "Total Current Liabilities",1])/2
     if(is.na(out)){out=0}
     out
   })
